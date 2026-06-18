@@ -86,51 +86,45 @@ jobs:
 
       - name: Terraform Plan
         env:
-          TF_VAR_domain_name: ${{ vars.domain_name }}
-          TF_VAR_dnssec_name: ${{ vars.dnssec_name }}
-          TF_VAR_enable_dnssec: ${{ vars.enable_dnssec }}
-          TF_VAR_kms_log_description: ${{ vars.kms_log_description }}
-          TF_VAR_kms_verify_alias_name: ${{ vars.kms_verify_alias_name }}
-          TF_VAR_kms_verify_description: ${{ vars.kms_verify_description }}
-          TF_VAR_kms_log_alias_name: ${{ vars.kms_log_alias_name }}
-          TF_VAR_bucket_frontend_allowed_origins: ${{ vars.bucket_frontend_allowed_origins }}
-          TF_VAR_bucket_frontend_name: ${{ vars.bucket_frontend_name }}
-          TF_VAR_bucket_arquivos_allowed_origins: ${{ vars.bucket_arquivos_allowed_origins }}
-          TF_VAR_bucket_arquivos_name: ${{ vars.bucket_arquivos_name }}
-          TF_VAR_arquivos_path_rewrite: ${{ vars.arquivos_path_rewrite }}
-          TF_VAR_bucket_cdn_log: ${{ vars.bucket_cdn_log }}
-          TF_VAR_spa_route_rewrite: ${{ vars.spa_route_rewrite }}
-          TF_VAR_arquivos_cache_policy_name: ${{ vars.arquivos_cache_policy_name }}
-          TF_VAR_arquivos_cache_policy_default_ttl: ${{ vars.arquivos_cache_policy_default_ttl }}
-          TF_Var_arquivos_cache_policy_max_ttl: ${{ vars.arquivos_cache_policy_max_ttl }}
-          TF_Var_arquivos_cache_policy_min_ttl: ${{ vars.arquivos_cache_policy_min_ttl }}
-          TF_VAR_log_retention_in_days: ${{ vars.log_retention_in_days }}
-          TF_VAR_log_route53_group_name: ${{ vars.log_route53_group_name }}
-          TF_VAR_domain_log_policy: ${{ vars.domain_log_policy }}
+          TF_VAR_appregistry_id: ${{ vars.appregistry_id }}
+          TF_VAR_access_token_validity: ${{ vars.access_token_validity }}
+          TF_VAR_css_file_path: ${{ vars.css_file_path }}
+          TF_VAR_logo_file_path: ${{ vars.logo_file_path }}
+          TF_VAR_default_name: ${{ vars.default_name }}
+          TF_VAR_deletion_protection: ${{ vars.deletion_protection }}
+          TF_VAR_default_email: ${{ vars.default_email }}
+          TF_VAR_mfa_configuration: ${{ vars.mfa_configuration }}
+          TF_VAR_reply_to_email_address: ${{ vars.reply_to_email_address }}
+          TF_VAR_ses_verified_email_account: ${{ vars.ses_verified_email_account }}
+          TF_VAR_id_token_validity: ${{ vars.id_token_validity }}
+          TF_VAR_refresh_token_validity: ${{ vars.refresh_token_validity }}
+          TF_VAR_unit_access_token: ${{ vars.unit_access_token }}
+          TF_VAR_unit_id_token: ${{ vars.unit_id_token }}
+          TF_VAR_unit_refresh_token: ${{ vars.unit_refresh_token }}
+          TF_VAR_callback_urls: ${{ vars.callback_urls }}
+          TF_VAR_default_redirect: ${{ vars.default_redirect }}
+          TF_VAR_logout_urls: ${{ vars.logout_urls }}
         run: terraform plan -out=tfplan
 
       - name: Terraform Apply
         # O auto-approve é essencial em ambientes de CI/CD pois não há interação humana
         env:
-          TF_VAR_domain_name: ${{ vars.domain_name }}
-          TF_VAR_dnssec_name: ${{ vars.dnssec_name }}
-          TF_VAR_enable_dnssec: ${{ vars.enable_dnssec }}
-          TF_VAR_kms_log_description: ${{ vars.kms_log_description }}
-          TF_VAR_kms_verify_alias_name: ${{ vars.kms_verify_alias_name }}
-          TF_VAR_kms_verify_description: ${{ vars.kms_verify_description }}
-          TF_VAR_kms_log_alias_name: ${{ vars.kms_log_alias_name }}
-          TF_VAR_bucket_frontend_allowed_origins: ${{ vars.bucket_frontend_allowed_origins }}
-          TF_VAR_bucket_frontend_name: ${{ vars.bucket_frontend_name }}
-          TF_VAR_bucket_arquivos_allowed_origins: ${{ vars.bucket_arquivos_allowed_origins }}
-          TF_VAR_bucket_arquivos_name: ${{ vars.bucket_arquivos_name }}
-          TF_VAR_arquivos_path_rewrite: ${{ vars.arquivos_path_rewrite }}
-          TF_VAR_spa_route_rewrite: ${{ vars.spa_route_rewrite }}
-          TF_VAR_bucket_cdn_log: ${{ vars.bucket_cdn_log }}
-          TF_VAR_arquivos_cache_policy_name: ${{ vars.arquivos_cache_policy_name }}
-          TF_VAR_arquivos_cache_policy_default_ttl: ${{ vars.arquivos_cache_policy_default_ttl }}
-          TF_Var_arquivos_cache_policy_max_ttl: ${{ vars.arquivos_cache_policy_max_ttl }}
-          TF_Var_arquivos_cache_policy_min_ttl: ${{ vars.arquivos_cache_policy_min_ttl }}
-          TF_VAR_log_retention_in_days: ${{ vars.log_retention_in_days }}
-          TF_VAR_log_route53_group_name: ${{ vars.log_route53_group_name }}
-          TF_VAR_domain_log_policy: ${{ vars.domain_log_policy }}
+          TF_VAR_appregistry_id: ${{ vars.appregistry_id }}
+          TF_VAR_access_token_validity: ${{ vars.access_token_validity }}
+          TF_VAR_css_file_path: ${{ vars.css_file_path }}
+          TF_VAR_logo_file_path: ${{ vars.logo_file_path }}
+          TF_VAR_default_name: ${{ vars.default_name }}
+          TF_VAR_deletion_protection: ${{ vars.deletion_protection }}
+          TF_VAR_default_email: ${{ vars.default_email }}
+          TF_VAR_mfa_configuration: ${{ vars.mfa_configuration }}
+          TF_VAR_reply_to_email_address: ${{ vars.reply_to_email_address }}
+          TF_VAR_ses_verified_email_account: ${{ vars.ses_verified_email_account }}
+          TF_VAR_id_token_validity: ${{ vars.id_token_validity }}
+          TF_VAR_refresh_token_validity: ${{ vars.refresh_token_validity }}
+          TF_VAR_unit_access_token: ${{ vars.unit_access_token }}
+          TF_VAR_unit_id_token: ${{ vars.unit_id_token }}
+          TF_VAR_unit_refresh_token: ${{ vars.unit_refresh_token }}
+          TF_VAR_callback_urls: ${{ vars.callback_urls }}
+          TF_VAR_default_redirect: ${{ vars.default_redirect }}
+          TF_VAR_logout_urls: ${{ vars.logout_urls }}
         run: terraform apply -auto-approve tfplan
