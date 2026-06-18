@@ -1,13 +1,18 @@
+variable "application_tags" { type = map(string) }
 variable "default_name" { type = string }
 variable "deletion_protection" { type = string }
 variable "default_email" { type = string }
-variable "arn_lambda_trigger" { type = string }
-variable "application_tags" { type = map(string) }
 variable "mfa_configuration" { type = string }
 variable "reply_to_email_address" { type = string }
 variable "ses_verified_email_account" { type = string }
-variable "css_file_path" { type = string }
-variable "logo_file_path" { type = string }
+variable "css_file_path" {
+  type        = string
+  description = "Caminho para o arquivo CSS de customização da UI do Cognito"
+}
+variable "logo_file_path" {
+  type        = string
+  description = "Caminho para o arquivo de logo (PNG ou JPEG) para customização da UI do Cognito"
+}
 
 variable "client" {
   type = object({
