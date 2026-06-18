@@ -1,0 +1,75 @@
+name: Release
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [develop]
+
+jobs:
+  create-release:
+    if: ${{ github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'develop' && github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    permissions:
+      actions: read
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout develop
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.workflow_run.head_repository.full_name }}
+          ref: ${{ github.event.workflow_run.head_sha }}
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Create PR to main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          git fetch origin develop main --force
+          gh pr view --repo "$REPO" --base main --head "${{ github.event.workflow_run.head_repository.owner.login }}:develop" >/dev/null 2>&1 && exit 0
+          gh pr create \
+            --repo "$REPO" \
+            --base main \
+            --head "${{ github.event.workflow_run.head_repository.owner.login }}:develop" \
+            --title "feat: sync develop to main" \
+            --body "PR automática criada após a execução bem-sucedida do workflow CI na branch develop."
+
+      - name: Create version tag
+        id: version
+        run: |
+          git fetch --tags --force
+
+          LAST_TAG=$(git tag --list 'v*' --sort=-version:refname | head -n 1)
+          if [ -z "$LAST_TAG" ]; then
+            LAST_TAG="v0.0.0"
+          fi
+
+          VERSION=${LAST_TAG#v}
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
+          NEW_VERSION="v$MAJOR.$MINOR.$((PATCH + 1))"
+
+          if git rev-parse -q --verify "refs/tags/$NEW_VERSION" >/dev/null; then
+            echo "Tag $NEW_VERSION already exists."
+            exit 1
+          fi
+
+          git tag "$NEW_VERSION"
+          git push origin "$NEW_VERSION"
+          echo "tag_name=$NEW_VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ steps.version.outputs.tag_name }}" \
+            --title "Release ${{ steps.version.outputs.tag_name }}" \
+            --generate-notes
