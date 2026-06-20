@@ -104,6 +104,8 @@ jobs:
           TF_VAR_callback_urls: ${{ vars.callback_urls }}
           TF_VAR_default_redirect: ${{ vars.default_redirect }}
           TF_VAR_logout_urls: ${{ vars.logout_urls }}
+          TF_VAR_lambda_trigger_name: ${{ vars.lambda_trigger_name }}
+          TF_VAR_kms_key_id: ${{ vars.kms_key_id }}
         run: terraform plan -out=tfplan
 
       - name: Terraform Apply
@@ -127,4 +129,6 @@ jobs:
           TF_VAR_callback_urls: ${{ vars.callback_urls }}
           TF_VAR_default_redirect: ${{ vars.default_redirect }}
           TF_VAR_logout_urls: ${{ vars.logout_urls }}
+          TF_VAR_lambda_trigger_name: ${{ vars.lambda_trigger_name }}
+          TF_VAR_kms_key_id: ${{ vars.kms_key_id }}
         run: terraform apply -auto-approve tfplan

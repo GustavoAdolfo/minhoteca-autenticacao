@@ -30,6 +30,8 @@ module "cognito" {
   css_file_path              = var.css_file_path
   logo_file_path             = var.logo_file_path
   application_tags           = local.application_tags
+  lambda_cognitoTriggers_arn = local.lambda_trigger_arn
+  kms_key_arn                = local.kms_arn
   client = {
     access_token_validity  = var.access_token_validity
     id_token_validity      = var.id_token_validity

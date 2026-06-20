@@ -20,6 +20,27 @@ resource "aws_cognito_user_pool" "pool" {
     reply_to_email_address = var.reply_to_email_address
     source_arn             = var.ses_verified_email_account
   }
+  lambda_config {
+    # custom_message               = var.lambda_cognitoTriggers_arn # (Optional) Custom Message AWS Lambda trigger.
+    # custom_email_sender          = var.lambda_cognitoTriggers_arn # (Optional) A custom email sender AWS Lambda trigger. See custom_email_sender Below.
+    define_auth_challenge          = var.lambda_cognitoTriggers_arn # (Optional) Defines the authentication challenge.
+    create_auth_challenge          = var.lambda_cognitoTriggers_arn # (Optional) ARN of the lambda creating an authentication challenge.
+    verify_auth_challenge_response = var.lambda_cognitoTriggers_arn # (Optional) Verifies the authentication challenge response.
+    pre_sign_up                    = var.lambda_cognitoTriggers_arn # (Optional) Pre-registration AWS Lambda trigger.
+    post_confirmation              = var.lambda_cognitoTriggers_arn # (Optional) Post-confirmation AWS Lambda trigger.
+    pre_authentication             = var.lambda_cognitoTriggers_arn # (Optional) Pre-authentication AWS Lambda trigger.
+    pre_token_generation           = var.lambda_cognitoTriggers_arn # (Optional) Allow to customize identity token claims before token generation.
+    post_authentication            = var.lambda_cognitoTriggers_arn # (Optional) Post-authentication AWS Lambda trigger.
+    kms_key_id                     = var.kms_key_arn                # (Optional) The Amazon Resource Name of Key Management Service Customer master keys. Amazon Cognito uses the key to encrypt codes and temporary passwords sent to CustomEmailSender and CustomSMSSender.
+    custom_email_sender {
+      # lambda_arn     = aws_lambda_alias.customMessage.arn
+      # lambda_arn = "arn:aws:lambda:us-east-1:067855005095:function:testes"
+      lambda_arn     = var.lambda_cognitoTriggers_arn
+      lambda_version = "V1_0"
+    }
+    # user_migration - (Optional) User migration Lambda config type.
+    # custom_sms_sender - (Optional) A custom SMS sender AWS Lambda trigger. See custom_sms_sender Below.
+  }
   mfa_configuration = var.mfa_configuration
 
   schema {

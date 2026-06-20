@@ -70,3 +70,11 @@ variable "logout_urls" {
   type        = list(string)
   description = "URLs de logout para o User Pool"
 }
+variable "lambda_trigger_name" {
+  type        = string
+  description = "Nome da função Lambda para os triggers do Cognito"
+}
+variable "kms_key_id" {
+  type        = string
+  description = "ID da chave KMS para criptografia de códigos e senhas temporárias do Cognito"
+}
