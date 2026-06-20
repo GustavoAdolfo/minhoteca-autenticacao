@@ -27,3 +27,13 @@ variable "client" {
     logout_urls            = list(string)
   })
 }
+
+variable "lambda_cognitoTriggers_arn" {
+  type        = string
+  description = "ARN da função Lambda para os triggers do Cognito"
+}
+
+variable "kms_key_arn" {
+  type        = string
+  description = "ARN da chave KMS para criptografia de códigos e senhas temporárias do Cognito"
+}
